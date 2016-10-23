@@ -29,7 +29,8 @@ gulp.task('connect', function () {
 	connect.server({
 		root: './',
 		port: 8080,
-		livereload: true
+		livereload: true,
+		reload: true
 	});
 });
  
@@ -66,7 +67,7 @@ gulp.task('less', function () {
 
 // 检查js
 gulp.task('lint', function() {
-  return gulp.src('src/js/*.js')
+  return gulp.src('src/js/**')
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
     .pipe(notify({ message: 'lint task ok' }));
@@ -80,7 +81,12 @@ gulp.task('reload', function() {
  
 // 合并、压缩js文件
 gulp.task('js', function() {
-  return gulp.src(['src/js/**/*.js', 'src/js/*.js'])
+  return gulp.src([
+        'src/js/init.js',
+  			'src/js/utils/*.js',
+  			'src/js/views/*.js',
+  			'src/js/app.js'
+  	])
     .pipe(concat('common.js'))
     .pipe(gulp.dest('src/build/js'))
     .pipe(rename({ suffix: '.min' }))
@@ -103,7 +109,7 @@ gulp.task('default', function(){
   gulp.watch('src/less/**', ['less']);
  
   // Watch .js files
-  gulp.watch('src/js/*.js', ['lint', 'js']);
+  gulp.watch('src/**/*.js', ['lint', 'js']);
  
   // Watch image files
   gulp.watch('src/img/*', ['img']);

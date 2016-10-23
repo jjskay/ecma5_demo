@@ -1,2 +1,8 @@
-var a = '123';
-var b = '234';
+
+myApp.onPageInit('*', function (page) {
+  var name = page['name'];
+  name == 'home' && homeInit(page);
+  name == 'login' && loginInit(page);
+})
+ 
+
